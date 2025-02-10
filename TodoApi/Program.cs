@@ -101,5 +101,5 @@ return Results.NoContent();
 });
 
 
-
+app.MapGet("/",()=>"Yaaaaaaaaaa, it's working");
 app.Run();
