@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5250';
+// axios.defaults.baseURL = 'http://localhost:5250';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 // הגדרת אינטרספטורים
 axios.interceptors.request.use(
