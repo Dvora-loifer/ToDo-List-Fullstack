@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "axios": "^1.6.3",
     "dotenv": "^16.4.7",
     "react": "^18.2.0",
@@ -31,5 +32,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy":"https://three-project-iuho.onrender.com"
+"proxy": "https://three-project-iuho.onrender.com"
 }

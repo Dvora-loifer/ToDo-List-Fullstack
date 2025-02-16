@@ -26,6 +26,8 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseCors("AllowAllOrigins");
+
 app.UseSwagger();
 
 app.UseSwaggerUI(c => 
@@ -34,7 +36,6 @@ app.UseSwaggerUI(c =>
 });
 
 
-app.UseCors("AllowAllOrigins");
 
 
 app.MapGet("/items", async (ToDoDbContext db) =>

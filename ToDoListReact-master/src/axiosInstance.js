@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
     // baseURL: 'http://localhost:5250', // החלף בכתובת ה-URL של ה-API שלך
-    baseURL:process.env.REACT_APP_API_URL
+    baseURL:"https://three-project-iuho.onrender.com"
+
     // ,
 
 });
