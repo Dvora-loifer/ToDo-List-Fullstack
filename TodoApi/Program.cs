@@ -150,36 +150,66 @@ app.UseSwaggerUI(c =>
 
 // 4️⃣ הגדרת המסלולים עם טיפול בשגיאות
 app.MapGet("/items", async (ToDoDbContext db) =>
-    await db.Item.ToListAsync()).RequireCors("AllowAllOrigins");
+{
+    try
+    {
+        return Results.Ok(await db.Item.ToListAsync());
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error: {ex.Message}");
+    }
+});
 
 app.MapPost("/items", async (ToDoDbContext db, Item newItem) =>
 {
-    db.Item.Add(newItem);
-    await db.SaveChangesAsync();
-    return Results.Created($"/items/{newItem.Id}", newItem);
-}).RequireCors("AllowAllOrigins");
+    try
+    {
+        db.Item.Add(newItem);
+        await db.SaveChangesAsync();
+        return Results.Created($"/items/{newItem.Id}", newItem);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error: {ex.Message}");
+    }
+});
 
 app.MapPut("/items/{id}", async (int id, ToDoDbContext db, Item item) =>
 {
-    var newItem = await db.Item.FindAsync(id);
-    if (newItem == null) return Results.NotFound();
+    try
+    {
+        var newItem = await db.Item.FindAsync(id);
+        if (newItem == null) return Results.NotFound("Item not found");
 
-    newItem.Name = item.Name;
-    newItem.IsComplete = item.IsComplete;
+        newItem.Name = item.Name;
+        newItem.IsComplete = item.IsComplete;
 
-    await db.SaveChangesAsync();
-    return Results.Ok(newItem);
-}).RequireCors("AllowAllOrigins");
+        await db.SaveChangesAsync();
+        return Results.Ok(newItem);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error: {ex.Message}");
+    }
+});
 
 app.MapDelete("/items/{id}", async (int id, ToDoDbContext db) =>
 {
-    var item = await db.Item.FindAsync(id);
-    if (item == null) return Results.NotFound();
+    try
+    {
+        var item = await db.Item.FindAsync(id);
+        if (item == null) return Results.NotFound("Item not found");
 
-    db.Item.Remove(item);
-    await db.SaveChangesAsync();
-    return Results.NoContent();
-}).RequireCors("AllowAllOrigins");
+        db.Item.Remove(item);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error: {ex.Message}");
+    }
+});
 
 // 5️⃣ מסלול לבדיקה שהשרת עובד
 app.MapGet("/", () => "Yaaaaaaaaaa, it's working");
